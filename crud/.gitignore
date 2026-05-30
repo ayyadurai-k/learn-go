@@ -1,0 +1,12 @@
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+
+# Compiled binaries
+crud
+*.exe
+
+# Go build/test artifacts
+*.test
+*.out
