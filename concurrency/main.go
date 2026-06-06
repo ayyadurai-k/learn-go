@@ -11,7 +11,7 @@ func main(){
 	orders := generateOrders(10)
 
 
-	wg.Add(3)
+	wg.Add(2)
 
 	go func() {
 		defer wg.Done()
@@ -22,13 +22,11 @@ func main(){
 		defer wg.Done()
 		updateOrderStatuses(orders)
 	}()
-
-	go func() {
-		defer wg.Done()
-		reportOrderStatuses(orders)
-	}()
-
 	wg.Wait()
+
+
+	reportOrderStatuses(orders)
+
 }
 
 type Order struct {
