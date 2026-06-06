@@ -32,6 +32,7 @@ func main(){
 type Order struct {
 	ID int
 	Status string
+	mu sync.Mutex
 }
 
 
@@ -46,7 +47,9 @@ func generateOrders(count int) ([]*Order) {
 func processOrders(orders []*Order) {
 	for _, order := range orders {
 		// time.Sleep(1 * time.Second) // Simulate processing time
+		order.mu.Lock()
 		order.Status = "processed"
+		order.mu.Unlock()
 		println("Processed order ID:", order.ID)
 	}	
 }
@@ -55,7 +58,9 @@ func updateOrderStatuses(orders []*Order) {
 	for _, order := range orders {
 		// time.Sleep(500 * time.Millisecond)
 		status := []string{"pending", "processing", "shipped", "delivered"}[rand.Intn(4)]
+		order.mu.Lock()
 		order.Status = status
+		order.mu.Unlock()
 		println("Updated order ID:", order.ID, "to status:", order.Status)
 	}
 }
